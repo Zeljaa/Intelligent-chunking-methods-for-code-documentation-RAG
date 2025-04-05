@@ -36,7 +36,7 @@ Example of a raw entry:
   "role": "user"
 }
 
-
+```
 ---
 
 ## 🧩 Chunking Strategy  
