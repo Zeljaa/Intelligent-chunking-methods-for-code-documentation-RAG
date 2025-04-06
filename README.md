@@ -1,12 +1,12 @@
 # Intelligent Chunking Methods for Code Documentation RAG  
 **JetBrains Internship Entry Task**
 
----
+
 
 ## 📌 Overview  
 This project explores how different **chunking parameters** and the **number of retrieved chunks (top-k)** affect **recall** and **precision** in a retrieval-augmented generation (RAG) system. The goal is to evaluate which configurations lead to the most effective information retrieval, particularly for downstream language model tasks.
 
----
+
 
 ## 🎯 Objective  
 Implement a complete retrieval pipeline and analyze the influence of:
@@ -16,7 +16,6 @@ Implement a complete retrieval pipeline and analyze the influence of:
 
 on retrieval performance, using open-source tools and models.
 
----
 
 ## 📚 Dataset  
 - **Corpus**: `chatlogs.md` – a markdown file containing real-world technical chat messages.  
