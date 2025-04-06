@@ -65,7 +65,8 @@ This highlights the importance of conservative retrieval in precision-oriented t
 ---
 
 ### 🔹 Recall Observations  
-Recall increased as **both chunk size and k value** increased — which is expected, as larger or more numerous chunks increase the chance of hitting relevant content.  ![Uploading eval_whole_result_avg_recall_heatmap.png…]()
+Recall increased as **both chunk size and k value** increased — which is expected, as larger or more numerous chunks increase the chance of hitting relevant content.
+![eval_whole_result_avg_recall_heatmap](https://github.com/user-attachments/assets/dd3b8c75-5e78-4237-a0b7-e955f7c4400b)
 
 However, this metric alone can be misleading due to the increase in retrieved content length.
 
