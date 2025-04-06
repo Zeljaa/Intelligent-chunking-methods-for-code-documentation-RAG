@@ -94,9 +94,35 @@ When combining **precision and recall**, we computed the **Area Under Curve (AUC
 ![advanced_analysis_pr_curves_by_k](https://github.com/user-attachments/assets/46a99e93-e05f-45a8-8457-53614fed8d10)
 
 ---
+## 🧹 What Happens When We Clean the Corpus?
+
+Initially, the corpus included full chat messages with `"user"` and `"assistant"` roles, structured like this:
+
+```json
+[
+  {"content": "These instructions apply to section-based themes...", "role": "user"},
+  {"content": "This feature only applies to Collection pages...", "role": "assistant"},
+  ...
+]
+```
+However, golden answers consist of solo content only — individual utterances, either from users or assistants — and do not contain metadata like roles or JSON structures.
+
+This discrepancy introduces noise during chunking, as unrelated user queries and assistant replies can be merged into the same chunk. To mitigate this, we introduced a preprocessing step to strip the corpus down to only the raw "content" values, producing a clean, flattened text stream more aligned with the golden answer format.
+
+💡 Result?
+After re-running the entire evaluation on the cleaned corpus, the top-performing configuration showed a dramatic improvement in precision:
+
+🔼 Precision improved from 34.56% → 44.19% for Chunk Size = 50, k = 1
+![eval_result_avg_precision_heatmap](https://github.com/user-attachments/assets/08214291-1d9d-40f8-8cfc-24e35a6421e8)
+
+This clearly demonstrates that removing structural and conversational noise from the corpus leads to significantly better retrieval performance, especially in precision-focused setups.
+
+This result reinforces a core RAG insight:
+
+Even basic preprocessing — when aligned with the evaluation objective — can lead to meaningful downstream improvements.
+------------
 
 📌 *More in-depth analysis is available in the repository*, including:
-- Full precision/recall/f1 tables
-- Standard deviations
+- Full precision/recall/f1 tables (average and standard deviation) 
 - Per-question breakdowns
 - And more exploratory metrics
