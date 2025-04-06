@@ -108,7 +108,7 @@ However, golden answers consist of solo content only — individual utterances, 
 
 This discrepancy introduces noise during chunking, as unrelated user queries and assistant replies can be merged into the same chunk. To mitigate this, we introduced a preprocessing step to strip the corpus down to only the raw "content" values, producing a clean, flattened text stream more aligned with the golden answer format.
 
-💡 Result?
+##💡 Result?
 After re-running the entire evaluation on the cleaned corpus, the top-performing configuration showed a dramatic improvement in precision:
 
 🔼 Precision improved from 34.56% → 44.19% for Chunk Size = 50, k = 1
@@ -119,6 +119,7 @@ This clearly demonstrates that removing structural and conversational noise from
 This result reinforces a core RAG insight:
 
 Even basic preprocessing — when aligned with the evaluation objective — can lead to meaningful downstream improvements.
+
 ------------
 
 📌 *More in-depth analysis is available in the repository*, including:
