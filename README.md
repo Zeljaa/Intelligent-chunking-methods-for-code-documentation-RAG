@@ -1,104 +1,46 @@
-# 🧠 Intelligent Chunking Methods for Code Documentation RAG  
+# Intelligent Chunking Methods for Code Documentation RAG  
 **JetBrains Internship Entry Task**
 
 ---
 
 ## 📌 Overview  
-This project explores how different chunking parameters and the number of retrieved chunks affect the **recall** and **precision** of retrieved data in a retrieval-augmented generation (RAG) system.
+This project explores how different **chunking parameters** and the **number of retrieved chunks (top-k)** affect **recall** and **precision** in a retrieval-augmented generation (RAG) system. The goal is to evaluate which configurations lead to the most effective information retrieval, particularly for downstream language model tasks.
 
 ---
 
 ## 🎯 Objective  
-Implement a full retrieval pipeline using open-source embedding models, and evaluate retrieval quality across varying:
+Implement a complete retrieval pipeline and analyze the influence of:
 
-- Chunking strategies  
-- Chunk sizes  
-- Number of retrieved chunks (top-k)
+- Chunk size  (`10`, `50`, `100`, `150`, `200`, `250` tokens)
+- Number of retrieved chunks (`k` ∈ {1, 3, 5})  
+
+on retrieval performance, using open-source tools and models.
 
 ---
 
 ## 📚 Dataset  
-- **Corpus:** `Chatlogs (chatlogs.md)`  
-- **Queries & Golden Excerpts:** `questions_df.csv`  
+- **Corpus**: `chatlogs.md` – a markdown file containing real-world technical chat messages.  
+- **Evaluation Set**: `questions_df.csv` – a collection of questions and their corresponding golden answer spans, used to compute evaluation metrics.
 
 ---
 
-## 🛠️ Dataset Preparation  
-To enable experimentation, the dataset was processed in two distinct formats:
+## ⚙️ Retrieval Pipeline  
+The retrieval process follows a simple yet effective architecture:
 
-- **User-only messages**: Extracted and chunked only the `content` field from each message (excluding metadata).
-- **Full chat format**: Retained the full dictionary, including fields like `content` and `role` (e.g., username or system/user tag), and chunked the serialized text.
+1. **Chunking**  
+   The entire corpus is split into **fixed-length token chunks** using the [`FixedTokenChunker`](https://github.com/brandonstarxel/chunking_evaluation/blob/main/chunking_evaluation/chunking/fixed_token_chunker.py), which relies on the `cl100k_base` tokenizer (compatible with OpenAI's GPT models). Explored chunk sizes include:  
+   `10`, `50`, `100`, `150`, `200`, `250` tokens.
 
-Example of a raw entry:
-```python
-{
-  "content": "These instructions apply to section-based themes (Responsive 6.0+, Retina 4.0+, Parallax 3.0+ Turbo 2.0+, Mobilia 5.0+)...",
-  "role": "user"
-}
+2. **Embedding**  
+   Each chunk, as well as every evaluation query, is embedded using the **`all-MiniLM-L6-v2`** model via the `SentenceTransformers` library.  
+   - Embeddings are compared using **cosine similarity**.
 
-```
----
+3. **Retrieval**  
+   For each query, the top `k` most similar chunks are retrieved (`k ∈ {1, 3, 5}`) based on embedding similarity.
 
-## 🧩 Chunking Strategy  
-Used the [**`FixedTokenChunker`**](https://github.com/brandonstarxel/chunking_evaluation/blob/main/chunking_evaluation/chunking/fixed_token_chunker.py) implementation, as described in the reference paper.
-
-This method splits text into **fixed-length token chunks** using a tokenizer. Internally, it uses the **`cl100k_base` tokenizer**, which is the same tokenizer used by **OpenAI's ChatGPT-3.5-turbo** and **GPT-4-turbo**. This ensures consistency with real-world production systems and accurate token-level chunking.
-
-The following configurations were explored:
-
-- **Chunk Sizes (in tokens)**:
-  - 10  
-  - 50  
-  - 100  
-  - 150  
-  - 200  
-  - 250
-
-- **Number of Retrieved Chunks (`k`)**:
-  - 1  
-  - 3  
-  - 5
-
----
-
-## 🔍 Embedding Model  
-Used the [**`all-MiniLM-L6-v2`**](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) model via the `SentenceTransformers` library.
-
-- Generated dense embeddings for all corpus chunks and queries.
-- Used **cosine similarity** to compute distances between query and chunk embeddings.
-
----
-
-## 📊 Evaluation Metrics  
-Evaluated retrieval performance using:
-
-- **Precision**
-- **Recall**
-- **F1 Score**
-
-All scores are **averaged across 55 evaluation queries**, with **standard deviation** also reported to measure variance.
-
-
-## Results
-
-| DataSet Preparation         | Chunk Size | K  | Recall (avg ± std)         | Precision (avg ± std)      | 
-|-----------------------------|------------|----|----------------------------|----------------------------|
-| **User-only messages**       | 10         | 1  | 0.054 ± 0.098              | 0.287 ± 0.437              |
-| **User-only messages**       | 10         | 3  | 0.114 ± 0.148              | 0.207 ± 0.224              |
-| **User-only messages**       | 10         | 5  | 0.161 ± 0.190              | 0.169 ± 0.167              |
-| **User-only messages**       | 50         | 1  | 0.374 ± 0.339              | 0.442 ± 0.396              |
-| **User-only messages**       | 50         | 3  | 0.637 ± 0.355              | 0.260 ± 0.169              |
-| **User-only messages**       | 50         | 5  | 0.733 ± 0.335              | 0.194 ± 0.112              |
-| **User-only messages**       | 100        | 1  | 0.468 ± 0.421              | 0.293 ± 0.278              |
-| **User-only messages**       | 100        | 3  | 0.772 ± 0.343              | 0.211 ± 0.148              |
-| **User-only messages**       | 100        | 5  | 0.848 ± 0.296              | 0.142 ± 0.106              |
-| **User-only messages**       | 150        | 1  | 0.517 ± 0.438              | 0.238 ± 0.242              |
-| **User-only messages**       | 150        | 3  | 0.815 ± 0.327              | 0.166 ± 0.129              |
-| **User-only messages**       | 150        | 5  | 0.886 ± 0.267              | 0.112 ± 0.098              |
-| **User-only messages**       | 200        | 1  | 0.589 ± 0.430              | 0.216 ± 0.202              |
-| **User-only messages**       | 200        | 3  | 0.893 ± 0.272              | 0.151 ± 0.130              |
-| **User-only messages**       | 200        | 5  | 0.937 ± 0.204              | 0.092 ± 0.083              |
-| **User-only messages**       | 250        | 1  | 0.560 ± 0.463              | 0.172 ± 0.200              |
-| **User-only messages**       | 250        | 3  | 0.880 ± 0.283              | 0.138 ± 0.138              |
-| **User-only messages**       | 250        | 5  | 0.946 ± 0.185              | 0.083 ± 0.079              |
-
+4. **Evaluation**  
+   Retrieved chunks are compared against the golden answers to compute:
+   - **Recall**: proportion of relevant chunks found  
+   - **Precision**: proportion of retrieved chunks that are relevant  
+   - **F1 Score**: harmonic mean of precision and recall  
+   Scores are averaged across **55 queries**, with standard deviations reported to assess consistency.
