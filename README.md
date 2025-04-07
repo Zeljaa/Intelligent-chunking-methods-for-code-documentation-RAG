@@ -124,6 +124,13 @@ Even basic preprocessing — when aligned with the evaluation objective — can 
 ------------
 
 📌 *More in-depth analysis is available in the repository*, including:
-- Full precision/recall/f1 tables (average and standard deviation) 
-- Per-question breakdowns
-- And more exploratory metrics
+- Full precision/recall/F1 tables (averages and standard deviations)  
+- Per-question breakdowns  
+- Additional exploratory metrics  
+
+🔍 **Note:**  
+Advanced analytics were performed using the **entire (uncleaned) corpus**.  
+In the `basic_analytics` folder:  
+- Files prefixed with `eval_whole_results_` refer to results **on the full corpus**  
+- Files prefixed with `eval_results_` refer to results **on the cleaned corpus**
+
