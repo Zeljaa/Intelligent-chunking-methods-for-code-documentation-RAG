@@ -27,8 +27,9 @@ on retrieval performance, using open-source tools and models.
 The retrieval process follows a simple yet effective architecture:
 
 1. **Chunking**  
-   The entire corpus is split into **fixed-length token chunks** using the [`FixedTokenChunker`](https://github.com/brandonstarxel/chunking_evaluation/blob/main/chunking_evaluation/chunking/fixed_token_chunker.py), which relies on the `cl100k_base` tokenizer (compatible with OpenAI's GPT models). Explored chunk sizes include:  
-   `10`, `50`, `100`, `150`, `200`, `250` tokens.
+   The entire corpus is split into **fixed-length token chunks** using the [`FixedTokenChunker`](https://github.com/brandonstarxel/chunking_evaluation/blob/main/chunking_evaluation/chunking/fixed_token_chunker.py), which relies on the `cl100k_base` tokenizer (compatible with OpenAI's GPT models).
+  - Explored chunk sizes include: `10`, `50`, `100`, `150`, `200`, `250` tokens.  
+  - **Note:** Chunks are created **without overlap**, meaning each token appears in exactly one chunk.
 
 2. **Embedding**  
    Each chunk, as well as every evaluation query, is embedded using the **`all-MiniLM-L6-v2`** model via the `SentenceTransformers` library.  
