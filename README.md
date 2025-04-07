@@ -102,10 +102,8 @@ This helps assess the impact of **chunk granularity** itself on overall retrieva
 Below, the **left plot** shows the AUC values across all chunk sizes (averaged over k), while the **right bar chart** displays the sorted AUC values for each chunk size:
 
 <p align="center">
-  <img ![advanced_analysis_pr_curves_by_chunk_size](https://github.com/user-attachments/assets/55b62d6e-c42a-4669-8617-8f9fb5140330)
- width="45%" />
-  <img ![advanced_analysis_auc_by_chunk_size_bar](https://github.com/user-attachments/assets/958b2e3f-61ae-48b8-b16c-85883e465db7)
- width="45%" />
+  <img src="https://github.com/user-attachments/assets/55b62d6e-c42a-4669-8617-8f9fb5140330" width="45%" />
+  <img src="https://github.com/user-attachments/assets/958b2e3f-61ae-48b8-b16c-85883e465db7" width="45%" />
 </p>
 
 🧠 **Insight**: The sweet spot lies around **chunk sizes 50–100**, where semantic context seems just long enough to be meaningful — without diluting relevance.
