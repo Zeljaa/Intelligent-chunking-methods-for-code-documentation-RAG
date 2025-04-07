@@ -91,6 +91,26 @@ When combining **precision and recall**, we computed the **Area Under Curve (AUC
 - AUC also suggests that **k = 1** provides the best balance of both metrics.
 - This aligns with the precision and recall (avg & per-token) results.
 ![advanced_analysis_pr_curves_by_k](https://github.com/user-attachments/assets/46a99e93-e05f-45a8-8457-53614fed8d10)
+### 🔹 Complementary View – AUC by Chunk Size
+
+In addition to comparing AUC values across chunk sizes for each fixed **k**, we also explored the inverse:
+
+> What happens when we **fix chunk size** and observe AUC performance across different values of **k**?
+
+This helps assess the impact of **chunk granularity** itself on overall retrieval performance, independent of the retrieval depth.
+
+Below, the **left plot** shows the AUC values across all chunk sizes (averaged over k), while the **right bar chart** displays the sorted AUC values for each chunk size:
+
+<p align="center">
+  <img ![advanced_analysis_pr_curves_by_chunk_size](https://github.com/user-attachments/assets/55b62d6e-c42a-4669-8617-8f9fb5140330)
+ width="45%" />
+  <img ![advanced_analysis_auc_by_chunk_size_bar](https://github.com/user-attachments/assets/958b2e3f-61ae-48b8-b16c-85883e465db7)
+ width="45%" />
+</p>
+
+🧠 **Insight**: The sweet spot lies around **chunk sizes 50–100**, where semantic context seems just long enough to be meaningful — without diluting relevance.
+
+This finding reinforces the earlier observation that **moderately sized chunks**, coupled with **conservative retrieval (k=1)**, tend to yield optimal performance in precision-focused retrieval tasks.
 
 ---
 ## 🧹 What Happens When We Clean the Corpus?
