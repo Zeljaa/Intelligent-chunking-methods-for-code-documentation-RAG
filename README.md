@@ -42,7 +42,7 @@ The retrieval process follows a simple yet effective architecture:
    Retrieved chunks are compared against the golden answers to compute:
    - **Recall**: proportion of relevant chunks found  
    - **Precision**: proportion of retrieved chunks that are relevant  
-   - **F1 Score**: harmonic mean of precision and recall  
+   
    Scores are averaged across **55 queries**, with standard deviations reported to assess consistency.
 
 
