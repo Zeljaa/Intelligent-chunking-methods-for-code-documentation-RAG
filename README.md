@@ -93,22 +93,18 @@ When combining **precision and recall**, we computed the **Area Under Curve (AUC
 ![advanced_analysis_pr_curves_by_k](https://github.com/user-attachments/assets/46a99e93-e05f-45a8-8457-53614fed8d10)
 ### 🔹 Complementary View – AUC by Chunk Size
 
-In addition to comparing AUC values across chunk sizes for each fixed **k**, we also explored the inverse:
+We also flipped the view:  
+> What if we fix **chunk size** and observe AUC across different **k** values?
 
-> What happens when we **fix chunk size** and observe AUC performance across different values of **k**?
-
-This helps assess the impact of **chunk granularity** itself on overall retrieval performance, independent of the retrieval depth.
-
-Below, the **left plot** shows the AUC values across all chunk sizes (averaged over k), while the **right bar chart** displays the sorted AUC values for each chunk size:
+This reveals how chunk granularity alone impacts performance.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/55b62d6e-c42a-4669-8617-8f9fb5140330" width="45%" />
   <img src="https://github.com/user-attachments/assets/958b2e3f-61ae-48b8-b16c-85883e465db7" width="45%" />
 </p>
 
-🧠 **Insight**: The sweet spot lies around **chunk sizes 50–100**, where semantic context seems just long enough to be meaningful — without diluting relevance.
 
-This finding reinforces the earlier observation that **moderately sized chunks**, coupled with **conservative retrieval (k=1)**, tend to yield optimal performance in precision-focused retrieval tasks.
+🧠 **Insight**: Chunk sizes around **50–100 tokens** strike the best balance — long enough for context, short enough to avoid noise. Paired with **k = 1**, this setup proved most effective for this corpus and question set.
 
 ---
 ## 🧹 What Happens When We Clean the Corpus?
